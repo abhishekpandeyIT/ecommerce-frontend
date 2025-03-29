@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { Auth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { auth } from 'firebase/app';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -13,7 +12,7 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
 
   constructor(
-    private fireAuth: AngularFireAuth,
+    private fireAuth: Auth,
     private http: HttpClient,
     private router: Router
   ) { }
@@ -24,24 +23,28 @@ export class AuthService {
   }
 
   // Register new user
-  register(userData: any) {
+  // register(userData: any) {
+  //   return this.http.post(`${this.apiUrl}/auth/register`, userData);
+  // }
+
+  register(userData: { name: string; email: string; password: string; phone?: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/register`, userData);
   }
 
   // Firebase social login
   socialLogin(provider: 'google' | 'facebook' | 'twitter') {
-    let authProvider;
-    
+    let authProvider: any;
+
     switch(provider) {
-      case 'google': authProvider = new auth.GoogleAuthProvider(); break;
-      case 'facebook': authProvider = new auth.FacebookAuthProvider(); break;
-      case 'twitter': authProvider = new auth.TwitterAuthProvider(); break;
+      case 'google': authProvider = new GoogleAuthProvider(); break;
+      case 'facebook': authProvider = new FacebookAuthProvider(); break;
+      case 'twitter': authProvider = new TwitterAuthProvider(); break;
     }
 
-    return this.fireAuth.signInWithPopup(authProvider)
-      .then((result:any) => {
-        return this.http.post(`${this.apiUrl}/auth/firebase`, { 
-          idToken: (result.user as any).za 
+    return signInWithPopup(this.fireAuth, authProvider)
+      .then((result: any) => {
+        return this.http.post(`${this.apiUrl}/auth/firebase`, {
+          idToken: result.user.accessToken
         }).toPromise();
       });
   }
