@@ -1,0 +1,114 @@
+<div class="admin-dashboard">
+    <div class="admin-dashboard__header">
+      <h1>Admin Dashboard</h1>
+      <button mat-raised-button color="primary" (click)="editProduct({})">
+        <mat-icon>add</mat-icon> Add New Product
+      </button>
+    </div>
+  
+    <!-- Stats Cards -->
+    <div class="admin-dashboard__stats" *ngIf="stats && !isLoading">
+      <div class="admin-dashboard__stat-card">
+        <h3>Total Users</h3>
+        <p>{{ stats.totalUsers || 0 }}</p>
+      </div>
+      <div class="admin-dashboard__stat-card">
+        <h3>Total Products</h3>
+        <p>{{ stats.totalProducts || 0 }}</p>
+      </div>
+      <div class="admin-dashboard__stat-card">
+        <h3>Total Orders</h3>
+        <p>{{ stats.totalOrders || 0 }}</p>
+      </div>
+      <div class="admin-dashboard__stat-card">
+        <h3>Monthly Revenue</h3>
+        <p>{{ stats.revenueStats?.monthly | currency:'USD':'symbol':'1.2-2' }}</p>
+      </div>
+    </div>
+  
+    <!-- Product Form -->
+    <div class="admin-dashboard__product-form" *ngIf="editingProduct">
+      <h2>{{ editingProduct._id ? 'Edit' : 'Add' }} Product</h2>
+      <form (ngSubmit)="saveProduct()">
+        <mat-form-field appearance="outline">
+          <mat-label>Product Name</mat-label>
+          <input matInput [(ngModel)]="editingProduct.name" name="name" required>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea matInput [(ngModel)]="editingProduct.description" name="description" required></textarea>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" [(ngModel)]="editingProduct.price" name="price" required>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Category</mat-label>
+          <input matInput [(ngModel)]="editingProduct.category" name="category" required>
+        </mat-form-field>
+  
+        <div class="form-actions">
+          <button mat-button type="button" (click)="editingProduct = null">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">
+            <span *ngIf="!isLoading">Save</span>
+            <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+          </button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Products Table -->
+    <div class="admin-dashboard__products">
+      <h2>Product Management</h2>
+      <mat-table [dataSource]="products" *ngIf="!isLoading; else loading">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let product">{{ product.name }}</mat-cell>
+        </ng-container>
+  
+        <!-- Category Column -->
+        <ng-container matColumnDef="category">
+          <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+          <mat-cell *matCellDef="let product">{{ product.category }}</mat-cell>
+        </ng-container>
+  
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+          <mat-cell *matCellDef="let product">{{ product.price | currency }}</mat-cell>
+        </ng-container>
+  
+        <!-- Stock Column -->
+        <ng-container matColumnDef="stock">
+          <mat-header-cell *matHeaderCellDef>Stock</mat-header-cell>
+          <mat-cell *matCellDef="let product">{{ product.stock }}</mat-cell>
+        </ng-container>
+  
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+          <mat-cell *matCellDef="let product" class="actions-cell">
+            <button mat-icon-button color="primary" (click)="editProduct(product)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteProduct(product._id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+  
+        <mat-header-row *matHeaderRowDef="['name', 'category', 'price', 'stock', 'actions']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['name', 'category', 'price', 'stock', 'actions'];"></mat-row>
+      </mat-table>
+  
+      <ng-template #loading>
+        <div class="loading-spinner">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+      </ng-template>
+    </div>
+  </div>

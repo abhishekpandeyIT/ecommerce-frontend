@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
-  errorMessage: string = '';
-  socialLoginLoading: boolean = false;
+  isLoading = false;
+  socialLoginLoading = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -25,40 +27,45 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/products']);
-    }
-  }
+  onSubmit(): void {
+    if (this.loginForm.invalid) return;
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const { email, password, rememberMe } = this.loginForm.value;
-      
-      this.authService.login(email, password).subscribe(
-        (res: any) => {
-          localStorage.setItem('token', res.token);
-          if (rememberMe) {
-            localStorage.setItem('rememberMe', 'true');
-          }
-          this.router.navigate(['/products']);
-        },
-        err => {
-          this.errorMessage = err.error.message || 'Login failed';
+    this.isLoading = true;
+    const { email, password, rememberMe } = this.loginForm.value;
+
+    this.authService.login(email, password).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('token', res.token);
+        if (rememberMe) {
+          localStorage.setItem('rememberMe', 'true');
         }
-      );
-    }
+        this.router.navigate(['/products']);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.snackBar.open(
+          err.error?.message || 'Login failed', 
+          'Close', 
+          { duration: 5000 }
+        );
+        this.isLoading = false;
+      }
+    });
   }
 
-  socialLogin(provider: string) {
+  socialLogin(provider: any): void {
     this.socialLoginLoading = true;
-    this.authService.socialLogin(provider as any).then(
+    this.authService.socialLogin(provider).then(
       (res: any) => {
         localStorage.setItem('token', res.token);
         this.router.navigate(['/products']);
       },
       (err:any) => {
-        this.errorMessage = err.message || 'Social login failed';
+        this.snackBar.open(
+          err.message || 'Social login failed', 
+          'Close', 
+          { duration: 5000 }
+        );
         this.socialLoginLoading = false;
       }
     );

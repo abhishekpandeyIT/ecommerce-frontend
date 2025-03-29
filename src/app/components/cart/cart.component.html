@@ -1,0 +1,80 @@
+<div class="cart-container">
+    <mat-card class="cart-card">
+      <mat-card-header>
+        <mat-card-title>Shopping Cart</mat-card-title>
+        <mat-card-subtitle *ngIf="cartItems.length === 0">Your cart is empty</mat-card-subtitle>
+      </mat-card-header>
+  
+      <mat-card-content>
+        <div *ngIf="cartItems.length > 0">
+          <div class="cart-items">
+            <div class="cart-item" *ngFor="let item of cartItems">
+              <div class="product-image">
+                <img [src]="item.product.images[0]" [alt]="item.product.name">
+              </div>
+              <div class="product-details">
+                <h3>{{ item.product.name }}</h3>
+                <p>{{ item.product.description | truncate:100 }}</p>
+                <div class="price">{{ item.product.price | currency }}</div>
+              </div>
+              <div class="quantity-control">
+                <button mat-icon-button (click)="updateQuantity(item, item.quantity - 1)">
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <span>{{ item.quantity }}</span>
+                <button mat-icon-button (click)="updateQuantity(item, item.quantity + 1)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <div class="item-total">
+                {{ (item.product.price * item.quantity) | currency }}
+              </div>
+              <button mat-icon-button color="warn" (click)="removeItem(item.product._id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+  
+          <div class="coupon-section">
+            <mat-form-field appearance="outline">
+              <mat-label>Coupon Code</mat-label>
+              <input matInput [(ngModel)]="couponCode">
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="applyCoupon()">Apply</button>
+          </div>
+  
+          <div class="summary">
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span>{{ subtotal | currency }}</span>
+            </div>
+            <div class="summary-row" *ngIf="discount > 0">
+              <span>Discount:</span>
+              <span class="discount">-{{ discount | currency }}</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total:</span>
+              <span>{{ total | currency }}</span>
+            </div>
+          </div>
+  
+          <div class="actions">
+            <button mat-stroked-button routerLink="/products">Continue Shopping</button>
+            <button mat-raised-button 
+                    color="primary" 
+                    (click)="checkout()"
+                    [disabled]="isLoading">
+              <span *ngIf="!isLoading">Proceed to Checkout</span>
+              <mat-spinner diameter="24" *ngIf="isLoading"></mat-spinner>
+            </button>
+          </div>
+        </div>
+  
+        <div class="empty-cart" *ngIf="cartItems.length === 0">
+          <mat-icon>shopping_cart</mat-icon>
+          <p>Your cart is empty</p>
+          <button mat-raised-button color="primary" routerLink="/products">Browse Products</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

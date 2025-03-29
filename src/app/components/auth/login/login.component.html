@@ -1,51 +1,65 @@
-<mat-card class="login-card">
+<div class="login-container">
+  <mat-card class="login-card">
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
     
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" type="email">
-          <mat-error *ngIf="loginForm.get('email')?.errors?.required">Email is required</mat-error>
-          <mat-error *ngIf="loginForm.get('email')?.errors?.email">Enter a valid email</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.errors?.required">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.errors?.email">
+            Please enter a valid email
+          </mat-error>
         </mat-form-field>
-  
-        <mat-form-field appearance="outline" class="full-width">
+
+        <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
           <input matInput formControlName="password" type="password">
-          <mat-error *ngIf="loginForm.get('password')?.errors?.required">Password is required</mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.errors?.required">
+            Password is required
+          </mat-error>
         </mat-form-field>
-  
+
         <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
-  
-        <div *ngIf="errorMessage" class="error-message">
-          {{ errorMessage }}
-        </div>
-  
-        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
-          Login
+
+        <button mat-raised-button 
+                color="primary" 
+                type="submit" 
+                [disabled]="loginForm.invalid || isLoading"
+                class="submit-button">
+          <span *ngIf="!isLoading">Login</span>
+          <mat-spinner diameter="24" *ngIf="isLoading"></mat-spinner>
         </button>
       </form>
-  
+
       <div class="social-login">
         <p>Or sign in with:</p>
-        <button mat-button (click)="socialLogin('google')" [disabled]="socialLoginLoading">
-          <img src="assets/google-icon.png" alt="Google"> Google
-        </button>
-        <button mat-button (click)="socialLogin('facebook')" [disabled]="socialLoginLoading">
-          <img src="assets/facebook-icon.png" alt="Facebook"> Facebook
-        </button>
-        <button mat-button (click)="socialLogin('twitter')" [disabled]="socialLoginLoading">
-          <img src="assets/twitter-icon.png" alt="Twitter"> Twitter
-        </button>
+        <div class="social-buttons">
+          <button mat-stroked-button 
+                  (click)="socialLogin('google')"
+                  [disabled]="socialLoginLoading">
+            <img src="assets/images/google-icon.svg" alt="Google" width="20">
+            Google
+          </button>
+          <button mat-stroked-button 
+                  (click)="socialLogin('facebook')"
+                  [disabled]="socialLoginLoading">
+            <img src="assets/images/facebook-icon.svg" alt="Facebook" width="20">
+            Facebook
+          </button>
+        </div>
       </div>
-  
+
       <div class="links">
         <a routerLink="/forgot-password">Forgot password?</a>
-        <span> | </span>
+        <span>|</span>
         <a routerLink="/register">Create an account</a>
       </div>
     </mat-card-content>
   </mat-card>
+</div>

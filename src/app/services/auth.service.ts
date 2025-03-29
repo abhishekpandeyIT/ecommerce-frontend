@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { auth } from 'firebase/app';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class AuthService {
     }
 
     return this.fireAuth.signInWithPopup(authProvider)
-      .then((result) => {
+      .then((result:any) => {
         return this.http.post(`${this.apiUrl}/auth/firebase`, { 
           idToken: (result.user as any).za 
         }).toPromise();
@@ -69,5 +70,9 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('admin');
     this.router.navigate(['/login']);
+  }
+  
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/forgot-password`, { email });
   }
 }
