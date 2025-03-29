@@ -1,9 +1,12 @@
-import { EnvironmentProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+// Angular Material Modules
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -14,6 +17,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,9 +26,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { ProductListComponent } from './components/products/product-list/product-list.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TruncatePipe } from './components/cart/truncate.pipe';
-
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
@@ -48,43 +50,25 @@ const firebaseConfig = {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    provideEnvironment(
-      provideFirebaseApp(() => initializeApp(firebaseConfig)),
-      provideAuth(() => getAuth())
-    ),
     HttpClientModule,
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    
+    // Angular Material Modules
     MatCardModule,
     MatButtonModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
     MatIconModule,
-    MatButtonModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
-    FormsModule, 
     MatCheckboxModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
     MatSnackBarModule,
-    FormsModule,
-    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-function provideEnvironment(arg0: EnvironmentProviders, arg1: EnvironmentProviders): any[] | import("@angular/core").Type<any> | import("@angular/core").ModuleWithProviders<{}> {
-  throw new Error('Function not implemented.');
-}

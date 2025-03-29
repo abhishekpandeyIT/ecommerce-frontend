@@ -9,7 +9,7 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
 
-const routes: Routes = [
+export const routes: Routes = [
   { 
     path: '', 
     redirectTo: 'products', 

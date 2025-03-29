@@ -4,6 +4,13 @@ import { Product } from '../../models/product.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatSpinner } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+import { MatLabel } from '@angular/material/input';
+import { TruncatePipe } from './truncate.pipe';
 
 interface CartItem {
   product: Product;
@@ -13,7 +20,8 @@ interface CartItem {
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrls: ['./cart.component.scss'],
+  imports: [ReactiveFormsModule, MatCardModule,MatIcon,MatSpinner, CommonModule, MatLabel, TruncatePipe]
 })
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];

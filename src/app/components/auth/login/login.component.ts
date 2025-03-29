@@ -1,13 +1,21 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatLabel } from '@angular/material/input';
+import { MatSpinner } from '@angular/material/progress-spinner';
+import { TruncatePipe } from '../../cart/truncate.pipe';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  imports: [ReactiveFormsModule, MatCardModule,MatIcon,MatSpinner, CommonModule, MatLabel, TruncatePipe]
+
 })
 export class LoginComponent {
   loginForm: FormGroup;
