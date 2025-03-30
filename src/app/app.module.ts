@@ -26,7 +26,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { ProductListComponent } from './components/products/product-list/product-list.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
-import { TruncatePipe } from './components/cart/truncate.pipe';
+import { TruncatePipe } from './Shared/truncate.pipe';
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",

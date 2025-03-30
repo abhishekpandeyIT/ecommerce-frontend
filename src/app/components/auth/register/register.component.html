@@ -10,10 +10,10 @@
           <mat-form-field appearance="outline">
             <mat-label>Full Name</mat-label>
             <input matInput formControlName="name">
-            <mat-error *ngIf="f['name'].errors?.required">
+            <mat-error *ngIf="f['name'].errors?.['required']">
               Name is required
             </mat-error>
-            <mat-error *ngIf="f['name'].errors?.minlength">
+            <mat-error *ngIf="f['name'].errors?.['minlength']">
               Name must be at least 3 characters
             </mat-error>
           </mat-form-field>
@@ -21,10 +21,10 @@
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" type="email">
-            <mat-error *ngIf="f['email'].errors?.required">
+            <mat-error *ngIf="f['email'].errors?.['required']">
               Email is required
             </mat-error>
-            <mat-error *ngIf="f['email'].errors?.email">
+            <mat-error *ngIf="f['email'].errors?.['email']">
               Please enter a valid email
             </mat-error>
           </mat-form-field>
@@ -36,13 +36,13 @@
             <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-            <mat-error *ngIf="f['password'].errors?.required">
+            <mat-error *ngIf="f['password'].errors?.['required']">
               Password is required
             </mat-error>
-            <mat-error *ngIf="f['password'].errors?.minlength">
+            <mat-error *ngIf="f['password'].errors?.['minlength']">
               Password must be at least 8 characters
             </mat-error>
-            <mat-error *ngIf="f['password'].errors?.strength">
+            <mat-error *ngIf="f['password'].errors?.['strength']">
               Password must contain uppercase, lowercase, number and special character
             </mat-error>
           </mat-form-field>
@@ -61,10 +61,10 @@
           <mat-form-field appearance="outline">
             <mat-label>Confirm Password</mat-label>
             <input matInput type="password" formControlName="confirmPassword">
-            <mat-error *ngIf="f['confirmPassword'].errors?.required">
+            <mat-error *ngIf="f['confirmPassword'].errors?.['required']">
               Please confirm your password
             </mat-error>
-            <mat-error *ngIf="registerForm.errors?.mismatch">
+            <mat-error *ngIf="registerForm.errors?.['mismatch']">
               Passwords don't match
             </mat-error>
           </mat-form-field>
@@ -72,7 +72,7 @@
           <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
             <input matInput formControlName="phone" type="tel">
-            <mat-error *ngIf="f['phone'].errors?.pattern">
+            <mat-error *ngIf="f['phone'].errors?.['pattern']">
               Please enter a valid phone number
             </mat-error>
           </mat-form-field>
@@ -81,7 +81,7 @@
             I agree to the <a href="/terms" target="_blank">Terms of Service</a> and 
             <a href="/privacy" target="_blank">Privacy Policy</a>
           </mat-checkbox>
-          <mat-error *ngIf="f['acceptTerms'].errors?.required" class="terms-error">
+          <mat-error *ngIf="f['acceptTerms'].errors?.['required']" class="terms-error">
             You must accept the terms
           </mat-error>
   

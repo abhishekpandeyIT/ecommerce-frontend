@@ -8,13 +8,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatLabel } from '@angular/material/input';
 import { MatSpinner } from '@angular/material/progress-spinner';
-import { TruncatePipe } from '../../cart/truncate.pipe';
+import { TruncatePipe } from '../../../Shared/truncate.pipe';
+import { SharedModule } from '../../../Shared/shared.module';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [ReactiveFormsModule, MatCardModule,MatIcon,MatSpinner, CommonModule, MatLabel, TruncatePipe]
+  imports: [SharedModule]
 
 })
 export class LoginComponent {

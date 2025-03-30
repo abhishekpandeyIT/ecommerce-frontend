@@ -9,12 +9,38 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root'
 })
 export class AuthService {
+  socialRegister(provider: string) {
+    let authProvider: any;
+
+    switch(provider) {
+      case 'google': authProvider = new GoogleAuthProvider(); break;
+      case 'facebook': authProvider = new FacebookAuthProvider(); break;
+      case 'twitter': authProvider = new TwitterAuthProvider(); break;
+      default: throw new Error('Unsupported provider');
+    }
+
+    return signInWithPopup(this.fireAuth, authProvider)
+      .then((result: any) => {
+      const userData = {
+        name: result.user.displayName,
+        email: result.user.email,
+        provider,
+        idToken: result.user.accessToken
+      };
+
+      return this.http.post(`${this.apiUrl}/auth/social-register`, userData).toPromise();
+      })
+      .catch(error => {
+      console.error('Social register error:', error);
+      throw error;
+      });
+  }
   private apiUrl = environment.apiUrl;
 
   constructor(
     private fireAuth: Auth,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
   ) { }
 
   // Email/password login

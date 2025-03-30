@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
-import { ProductsComponent } from './components/products/product/product.component';
+import { ProductComponent } from './components/products/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { authGuard } from './guards/auth.guard';
@@ -29,7 +29,7 @@ export const routes: Routes = [
   },
   { 
     path: 'products', 
-    component: ProductsComponent 
+    component: ProductComponent 
   },
   { 
     path: 'cart', 

@@ -1,0 +1,125 @@
+.product-list-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .sidebar {
+    width: 250px;
+    padding-right: 30px;
+    
+    h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+  }
+  
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+    
+    li {
+      padding: 8px 0;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        color: #e83e8c;
+      }
+      
+      &.active {
+        color: #e83e8c;
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .filters {
+    .filter-group {
+      margin-bottom: 20px;
+      
+      h4 {
+        font-size: 14px;
+        margin-bottom: 10px;
+        color: #555;
+      }
+      
+      input[type="range"] {
+        width: 100%;
+      }
+    }
+  }
+  
+  .main-content {
+    flex: 1;
+  }
+  
+  .product-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    h2 {
+      font-size: 24px;
+      color: #333;
+    }
+  }
+  
+  .sort-options {
+    select {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      background: white;
+    }
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(0,0,0,0.1);
+      border-radius: 50%;
+      border-top-color: #e83e8c;
+      animation: spin 1s ease-in-out infinite;
+      margin-bottom: 15px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  }
+  
+  .error-message {
+    color: #dc3545;
+    padding: 20px;
+    text-align: center;
+    background: #f8d7da;
+    border-radius: 5px;
+    margin: 20px 0;
+  }
+  
+  .no-products {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+  }

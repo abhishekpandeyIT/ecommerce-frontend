@@ -1,1 +1,38 @@
-<p>product works!</p>
+<div class="product-container">
+    <div class="product-image">
+      <img [src]="product.imageUrl" [alt]="product.name" (click)="zoomImage()">
+      <div class="product-actions">
+        <button class="quick-view" (click)="quickView()">Quick View</button>
+        <button class="wishlist" (click)="addToWishlist()">
+          <i class="far fa-heart"></i>
+        </button>
+        <button class="compare" (click)="addToCompare()">
+          <i class="fas fa-exchange-alt"></i>
+        </button>
+      </div>
+    </div>
+  
+    <div class="product-details">
+      <h3 class="product-name">{{ product.name }}</h3>
+      <div class="product-price">
+        <span class="current-price">${{ product.price }}</span>
+        <span *ngIf="product.oldPrice" class="old-price">${{ product.oldPrice }}</span>
+        <span *ngIf="product.discount" class="discount">{{ product.discount }}% OFF</span>
+      </div>
+      <div class="stock-status" [class.in-stock]="product.inStock" [class.out-of-stock]="!product.inStock">
+        {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+      </div>
+      
+      <div class="quantity-control" *ngIf="product.inStock">
+        <button (click)="decrementQuantity()">-</button>
+        <span>{{ quantity }}</span>
+        <button (click)="incrementQuantity()">+</button>
+      </div>
+      
+      <button class="add-to-cart" 
+              (click)="addToCart(product)" 
+              [disabled]="!product.inStock">
+        Add to Cart
+      </button>
+    </div>
+  </div>

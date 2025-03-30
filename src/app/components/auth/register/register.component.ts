@@ -1,20 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatIcon } from '@angular/material/icon';
-import { MatLabel } from '@angular/material/input';
-import { MatSpinner } from '@angular/material/progress-spinner';
-import { TruncatePipe } from '../../cart/truncate.pipe';
+import { SharedModule } from '../../../Shared/shared.module';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  imports: [ReactiveFormsModule, MatCardModule,MatIcon,MatSpinner, CommonModule, MatLabel, TruncatePipe]
+  imports: [SharedModule]
 
 })
 export class RegisterComponent {
@@ -24,6 +19,24 @@ export class RegisterComponent {
   passwordStrength = 0;
   strengthColor = 'red';
   strengthLabel = 'Weak';
+
+  socialRegister(provider: string) {
+    this.isLoading = true;
+    this.authService.socialRegister(provider).then((response: any) => {
+      this.snackBar.open('Social registration successful!', 'Close', {
+        duration: 5000
+      });
+      this.router.navigate(['/dashboard']);
+    }).catch((err: any) => {
+      this.snackBar.open(
+        err.error?.message || 'Social registration failed',
+        'Close',
+        { duration: 5000 }
+      );
+    }).finally(() => {
+      this.isLoading = false;
+    });
+  }
 
   constructor(
     private fb: FormBuilder,

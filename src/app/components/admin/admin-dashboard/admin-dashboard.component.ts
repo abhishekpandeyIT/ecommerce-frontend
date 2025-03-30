@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SharedModule } from '../../../Shared/shared.module';
 
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.scss'] // Changed to .scss
+  styleUrls: ['./admin-dashboard.component.scss'],
+  imports: [SharedModule]
 })
+
 export class AdminDashboardComponent implements OnInit {
   stats: any;
   products: any[] = [];

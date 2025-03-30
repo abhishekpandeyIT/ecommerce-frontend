@@ -12,10 +12,13 @@ export interface Product {
     stock: number;
     rating?: number;
     reviews?: Review[];
-    discount?: number;
     featured?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
+    inStock: boolean;
+    oldPrice?: number;
+    discount?: number;
+    imageUrl: string;
   }
   
   export interface Review {

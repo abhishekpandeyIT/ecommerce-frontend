@@ -13,11 +13,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
+import { TruncatePipe } from './truncate.pipe';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    TruncatePipe,
     ReactiveFormsModule,
     FormsModule,
     MatCardModule,
@@ -26,10 +30,13 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTableModule,
+    HttpClientModule
   ],
   exports: [
     CommonModule,
+    TruncatePipe,
     ReactiveFormsModule,
     FormsModule,
     MatCardModule,
@@ -38,7 +45,9 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTableModule,
+    HttpClientModule
   ]
 })
 export class SharedModule { }

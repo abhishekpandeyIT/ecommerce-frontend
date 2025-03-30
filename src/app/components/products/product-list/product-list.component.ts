@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { Product, ProductFilter } from '../../../models/product.model';
 import { ActivatedRoute } from '@angular/router';
+import { SharedModule } from '../../../Shared/shared.module';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  styleUrls: ['./product-list.component.scss'],
+    imports: [SharedModule]
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
@@ -31,6 +33,8 @@ export class ProductListComponent implements OnInit {
 
   loadProducts(): void {
     this.isLoading = true;
+    this.error = null;
+    
     const filter: ProductFilter = {
       category: this.selectedCategory,
       page: 1,
@@ -52,12 +56,15 @@ export class ProductListComponent implements OnInit {
   loadCategories(): void {
     this.productService.getCategories().subscribe({
       next: (categories) => this.categories = categories,
-      error: (err) => console.error('Failed to load categories:', err)
+      error: (err) => {
+        console.error('Failed to load categories:', err);
+        this.error = 'Failed to load categories';
+      }
     });
   }
 
   onCategoryChange(category: string): void {
-    this.selectedCategory = category;
+    this.selectedCategory = category === this.selectedCategory ? '' : category;
     this.loadProducts();
   }
 }
