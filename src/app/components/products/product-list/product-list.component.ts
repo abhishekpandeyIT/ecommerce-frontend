@@ -3,12 +3,13 @@ import { ProductService } from '../../../services/product.service';
 import { Product, ProductFilter } from '../../../models/product.model';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../Shared/shared.module';
+import { ProductComponent } from '../product/product.component';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
-    imports: [SharedModule]
+  imports: [SharedModule,ProductComponent]
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];

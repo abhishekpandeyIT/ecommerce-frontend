@@ -8,47 +8,46 @@ import { CartComponent } from './components/cart/cart.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
+import { ProductListComponent } from './components/products/product-list/product-list.component';
 
 export const routes: Routes = [
-  { 
-    path: '', 
-    redirectTo: 'products', 
-    pathMatch: 'full' 
+  {
+    path: '',
+    redirectTo: 'products',
+    pathMatch: 'full',
   },
-  { 
-    path: 'login', 
-    component: LoginComponent 
+  {
+    path: 'login',
+    component: LoginComponent,
   },
-  { 
-    path: 'register', 
-    component: RegisterComponent 
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
-  { 
-    path: 'forgot-password', 
-    component: ForgotPasswordComponent 
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
-  { 
-    path: 'products', 
-    component: ProductComponent 
-  },
-  { 
-    path: 'cart', 
+  { path: 'products', component: ProductListComponent },
+  { path: 'products/:id', component: ProductComponent },
+  {
+    path: 'cart',
     component: CartComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
-  { 
-    path: 'admin', 
+  {
+    path: 'admin',
     component: AdminDashboardComponent,
-    canActivate: [adminGuard] 
+    canActivate: [adminGuard],
   },
-  { 
-    path: '**', 
-    redirectTo: 'products' 
-  }
+  {
+    path: '**',
+    redirectTo: 'products',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

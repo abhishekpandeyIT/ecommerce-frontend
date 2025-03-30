@@ -27,6 +27,7 @@ import { ForgotPasswordComponent } from './components/auth/forgot-password/forgo
 import { ProductListComponent } from './components/products/product-list/product-list.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { TruncatePipe } from './Shared/truncate.pipe';
+import { ProductComponent } from './components/products/product/product.component';
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
@@ -45,7 +46,8 @@ const firebaseConfig = {
     ForgotPasswordComponent,
     ProductListComponent,
     AdminDashboardComponent,
-    TruncatePipe
+    TruncatePipe,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
