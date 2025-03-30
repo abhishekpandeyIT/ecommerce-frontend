@@ -1,61 +1,47 @@
-<h1 style="color: red">PRODUCT LIST</h1>
-<div class="product-list-container">
-    <div class="sidebar">
-      <h3>Categories</h3>
-      <ul class="category-list">
-        <li 
-          *ngFor="let category of categories" 
-          [class.active]="category === selectedCategory"
-          (click)="onCategoryChange(category)">
-          {{ category }}
-        </li>
-      </ul>
-  
-      <div class="filters">
-        <h3>Filters</h3>
-        <div class="filter-group">
-          <h4>Price</h4>
-          <input type="range" min="0" max="1000" step="10">
-        </div>
-        <div class="filter-group">
-          <h4>Color</h4>
-          <!-- Color filters would go here -->
-        </div>
-      </div>
-    </div>
-  
-    <div class="main-content">
-      <div class="product-list-header">
-        <h2>{{ selectedCategory || 'All Products' }}</h2>
-        <div class="sort-options">
-          <select>
-            <option>Default Sorting</option>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-            <option>Rating</option>
-            <option>Popularity</option>
-          </select>
-        </div>
-      </div>
-  
-      <div *ngIf="isLoading" class="loading-spinner">
-        <div class="spinner"></div>
-        <p>Loading products...</p>
-      </div>
-  
-      <div *ngIf="error" class="error-message">
-        {{ error }}
-      </div>
-  
-      <div class="product-grid">
-        <app-product 
-          *ngFor="let product of products" 
-          [product]="product">
-        </app-product>
-      </div>
-  
-      <div *ngIf="!isLoading && products.length === 0" class="no-products">
-        <p>No products found in this category.</p>
-      </div>
-    </div>
+<div class="filters">
+  <!-- Category Filter -->
+  <select
+    [(ngModel)]="selectedCategory"
+    (change)="onCategoryChange(selectedCategory)"
+  >
+    <option [value]="null">All Categories</option>
+    <option *ngFor="let category of categories" [value]="category">
+      {{ category }}
+    </option>
+  </select>
+
+  <!-- Sort Options -->
+  <select [(ngModel)]="selectedSort" (change)="onSortChange(selectedSort)">
+    <option value="">Default Sorting</option>
+    <option value="price-low-high">Price: Low to High</option>
+    <option value="price-high-low">Price: High to Low</option>
+    <option value="rating">Rating</option>
+  </select>
+
+  <!-- Price Range -->
+  <div class="price-range">
+    <label>Price Range:</label>
+    <input
+      type="range"
+      min="0"
+      max="1000"
+      step="10"
+      [(ngModel)]="priceRange[1]"
+      (change)="onPriceChange()"
+    />
+    <span>${{ priceRange[0] }} - ${{ priceRange[1] }}</span>
   </div>
+</div>
+
+<!-- Product List -->
+<div class="product-grid">
+  <app-product 
+    *ngFor="let product of filteredProducts" 
+    class="product-card"
+    [product]="product">
+  </app-product>
+  
+  <div *ngIf="!isLoading && filteredProducts.length === 0" class="no-products">
+    <p>No products found matching your criteria.</p>
+  </div>
+</div>
